@@ -1,0 +1,76 @@
+# Modelo omitido para uso com login OAuth (ChatGPT) no Codex.
+# O provedor/modelo será determinado pela conta autenticada.
+
+### Removed GitHub MCP using npx due to Node 25 ERR_MODULE_NOT_FOUND
+### Replace with stable Git MCP via node.exe in [mcpServers.git-trae]
+
+[mcpServers.Firecrawl]
+command = "npx"
+args = ["-y", "firecrawl-mcp"]
+env.FIRECRAWL_API_KEY = "${FIRECRAWL_API_KEY}"
+
+[mcpServers.Tavily]
+command = "npx"
+args = ["-y", "@mcptools/mcp-tavily"]
+env.TAVILY_API_KEY = "${TAVILY_API_KEY}"
+
+[mcpServers.Brave_Search]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-brave-search"]
+env.BRAVE_API_KEY = "${BRAVE_API_KEY}"
+
+[mcpServers.webresearch]
+command = "npx"
+args = ["-y", "@mzxrai/mcp-webresearch@latest"]
+
+[mcpServers.Playwright]
+command = "npx"
+args = ["-y", "@executeautomation/playwright-mcp-server"]
+
+[mcpServers.context7]
+command = "npx"
+args = ["-y", "@upstash/context7-mcp", "--api-key", "${CONTEXT7_API_KEY}"]
+
+[mcpServers.testsprite]
+command = "npx"
+args = ["@testsprite/testsprite-mcp@latest"]
+env.API_KEY = "${TESTSPRITE_API_KEY}"
+
+[mcpServers.TaskManager]
+command = "npx"
+args = ["-y", "@kazuph/mcp-taskmanager"]
+# Make path configurable via environment
+env.TASK_MANAGER_FILE_PATH = "${TASK_MANAGER_FILE_PATH}"
+
+[mcpServers.Sequential_Thinking]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-sequential-thinking"]
+
+[mcpServers.Memory]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-memory"]
+env.MEMORY_FILE_PATH = "memory.json"
+
+[mcpServers.Persistent_Knowledge_Graph]
+command = "npx"
+args = ["-y", "@itseasy21/mcp-knowledge-graph"]
+env.MEMORY_FILE_PATH = "memory.jsonl"
+
+[mcpServers.fetch]
+# Cross-platform fetch MCP (Node)
+command = "npx"
+args = ["-y", "@mokei/mcp-fetch"]
+env.PYTHONIOENCODING = "utf-8"
+
+[mcpServers.Exa]
+command = "npx"
+args = ["-y", "exa-mcp"]
+env.EXA_API_KEY = "${EXA_API_KEY}"
+
+
+# Stable Git MCP (Trae IDE sync)
+[mcpServers.git-trae]
+command = "C:/Program Files/nodejs/node.exe"
+args = ["C:/Users/Zappro/.trae/mcp/git/node_modules/@cyanheads/git-mcp-server/dist/index.js"]
+env.GITHUB_TOKEN = "${GITHUB_TOKEN}"
+source = "trae-ide"

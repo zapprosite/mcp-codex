@@ -1,0 +1,47 @@
+{
+  "timestamp": "2025-11-04T00:00:00Z",
+  "hardcoded_secrets": {
+    "files": [
+      {
+        "path": "codex-config.toml",
+        "status": "sanitized",
+        "details": [
+          "GITHUB_PERSONAL_ACCESS_TOKEN -> ${GITHUB_TOKEN}",
+          "FIRECRAWL_API_KEY -> ${FIRECRAWL_API_KEY}",
+          "TAVILY_API_KEY -> ${TAVILY_API_KEY}",
+          "BRAVE_API_KEY -> ${BRAVE_API_KEY}",
+          "context7 --api-key -> ${CONTEXT7_API_KEY}",
+          "testsprite API_KEY -> ${TESTSPRITE_API_KEY}"
+        ]
+      }
+    ],
+    "advice": [
+      "Rotate any exposed tokens immediately.",
+      "Keep real values only in local .env or OS environment (never commit)."
+    ]
+  },
+  "env_file": {
+    "path": ".env",
+    "contains_secrets": true,
+    "note": ".env is ignored by git (good). Keep it local only."
+  },
+  "npm_audit_summary": {
+    "path": ".mcp/package.json",
+    "vulnerabilities": { "moderate": 3, "high": 2, "critical": 0, "total": 5 },
+    "notable": [
+      {
+        "package": "playwright",
+        "severity": "high",
+        "advisory": "GHSA-7mvr-c777-76hp",
+        "recommended": ">= 1.55.1"
+      }
+    ]
+  },
+  "portability_risks": [
+    {
+      "component": "mcpServers.fetch",
+      "detail": "Hard-coded Windows path to uvx.exe",
+      "recommendation": "Use cross-platform command or env var path"
+    }
+  ]
+}

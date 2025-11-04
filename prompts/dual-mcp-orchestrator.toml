@@ -1,0 +1,102 @@
+[[prompts]]
+name = "dual-mcp-orchestrator"
+description = "Orquestra Trae IDE MCPs + mcp-codex repository"
+timeout = "unlimited"
+
+[prompt.context]
+discovery_mode = "aggressive"
+include_local = true
+include_remote = true
+
+content = """
+🎯 DUAL MCP ORCHESTRATOR - Codex CLI
+Modo: Background Execution | Status: Sempre Ativo
+======================================
+
+## FASE 0: DESCOBERTA E SINCRONIZAÇÃO
+
+[COMMAND] Listar todos MCPs disponíveis
+→ codex mcp list --json --all > /tmp/mcp-manifest.json
+
+[PARSE] Estrutura de MCPs
+→ Separar por source: 'trae-ide' vs 'mcp-codex-local'
+
+[VALIDATE] Verificar status de cada MCP
+→ Testar conectividade
+→ Verificar variáveis de ambiente (sem expor secrets)
+→ Registrar health status em ~/.codex/mcp-health.json
+
+[SYNC] Se houver divergências:
+→ Atualizar config.toml
+→ Recarregar MCPs
+→ Log em ~/.codex/mcp-sync.log
+
+## FASE 1: CONTEXTO UNIFICADO
+
+[MEMORY] Usar MCP "memory" para criar grafo unificado:
+  - Nodes: cada MCP disponível
+  - Edges: dependências e conflitos
+  - Status: healthcheck por MCP
+  - Source: trae vs local
+
+[LOG] Registrar:
+```
+{
+  "timestamp": "2025-11-05T00:00:00Z",
+  "trae_mcp_count": 6,
+  "local_mcp_count": 3,
+  "total_active": 9,
+  "conflicts": [],
+  "missing_secrets": []
+}
+```
+
+## FASE 2: MONITOR CONTÍNUO (Daemon)
+
+[LOOP] A cada 5 minutos:
+  → Verificar novos MCPs no repositório mcp-codex
+  → Comparar com última snapshot
+  → Se mudanças: regenerar config.toml
+  → Executar health check
+
+[ALERTAS]
+  - Se MCP falhar: tentativa de restart
+  - Se conflito de porta: resolver automaticamente
+  - Se secret expirado: notificar via log
+
+## FASE 3: AUTOMAÇÃO NOTURNA (Sleep Queue)
+
+→ Executar testes E2E em todos MCPs
+→ Gerar relatório de compatibilidade
+→ Sincronizar dependências (npm/pip)
+→ Backup de configurações
+
+## FASE 4: RELATÓRIO EXECUTIVO
+
+[OUTPUT]
+- File: ~/.codex/reports/dual-mcp-status.md
+- JSON: ~/.codex/reports/mcp-manifest.json
+- Health: ~/.codex/mcp-health.json
+
+---
+INICIAR IMEDIATAMENTE
+MODO: Background (daemon)
+LOG: tail -f ~/.codex/logs/codex.log
+"""
+
+[[commands]]
+name = "start"
+value = "codex daemon:start --profile=dual-mcp-orchestrator"
+
+[[commands]]
+name = "monitor"
+value = "codex daemon:logs --follow --filter='mcp'"
+
+[[commands]]
+name = "health"
+value = "cat ~/.codex/mcp-health.json | jq '.'"
+
+[[commands]]
+name = "sync"
+value = "codex mcp:sync --all --force"
+
