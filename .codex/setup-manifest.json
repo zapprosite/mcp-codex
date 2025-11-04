@@ -1,0 +1,8 @@
+{
+  "timestamp": "2025-11-04T14:40:07Z",
+  "env_status": "invalid",
+  "secrets_required": ["GITHUB_TOKEN","BRAVE_API_KEY","CONTEXT7_API_KEY","FIRECRAWL_API_KEY","TAVILY_API_KEY","EXA_API_KEY","TESTSPRITE_API_KEY","STRIPE_SECRET_KEY"],
+  "secrets_filled": 15,
+  "missing_keys": ["STRIPE_SECRET_KEY"],
+  "repo": "/mnt/d/projetos/mcp-codex"
+}

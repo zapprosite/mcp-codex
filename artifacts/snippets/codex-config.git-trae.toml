@@ -1,0 +1,8 @@
+[mcpServers.git-trae]
+command = "C:\\Program Files\\nodejs\\node.exe"
+args = [
+  "C:\\Users\\Zappro\\.trae\\mcp\\git\\node_modules\\@cyanheads\\git-mcp-server\\dist\\index.js"
+]
+env.GITHUB_TOKEN = "${GITHUB_TOKEN}"
+source = "trae-ide"
+

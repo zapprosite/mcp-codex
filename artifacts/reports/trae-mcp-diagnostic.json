@@ -1,0 +1,9 @@
+{
+  "node_default": "v22.21.0",
+  "node_lts": "unavailable: Windows path not accessible from this environment",
+  "trae_github_status": "BROKEN",
+  "solution": "use_git_mcp_instead",
+  "npx_cache_status": "unknown",
+  "timestamp": "2025-11-04T14:43:22Z"
+}
+

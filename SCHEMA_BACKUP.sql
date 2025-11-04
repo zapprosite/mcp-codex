@@ -1,0 +1,1 @@
+-- No database schema found. No SQLite or migration files detected.

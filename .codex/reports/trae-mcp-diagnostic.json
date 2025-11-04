@@ -1,0 +1,12 @@
+{
+  "node_default": "v22.21.0",
+  "node_lts": "unavailable",
+  "node_x86": "unavailable",
+  "trae_github_status": "BROKEN",
+  "npx_cache_empty": "unknown",
+  "missing_pkg": "@modelcontextprotocol/server-github",
+  "solution": "use_git_mcp_instead",
+  "timestamp": "2025-11-04T14:41:52Z",
+  "notes": "WSL workspace cannot access Windows paths; verify in Trae/Windows."
+}
+

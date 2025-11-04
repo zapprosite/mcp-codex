@@ -1,0 +1,22 @@
+{
+  "mcp_to_remove": [
+    {
+      "name": "GitHub",
+      "reason": "Uses npx + Node 25, causes ERR_MODULE_NOT_FOUND"
+    }
+  ],
+  "mcp_to_add": [
+    {
+      "name": "Git",
+      "type": "stdio",
+      "command": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "C:\\Users\\Zappro\\.trae\\mcp\\git\\node_modules\\@cyanheads\\git-mcp-server\\dist\\index.js"
+      ],
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+      }
+    }
+  ]
+}
+

@@ -1,0 +1,22 @@
+{
+  "scope": "repo (excluding .git and .mcp)",
+  "total_files": 22,
+  "by_extension": {
+    "log": 5,
+    "md": 5,
+    "py": 2,
+    "sh": 2,
+    "ps1": 2,
+    "json": 1,
+    "toml": 1,
+    "gitignore": 1,
+    "example": 1,
+    "gitkeep": 1,
+    "NOEXT": 1
+  },
+  "top_level_dirs": ["docs", "scripts", "logs", "data", ".vscode"],
+  "notes": [
+    "Large vendor content under .mcp hidden from metrics",
+    "No app source code detected (this repo configures MCP servers)"
+  ]
+}
