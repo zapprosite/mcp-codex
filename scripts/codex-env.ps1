@@ -45,18 +45,22 @@ foreach ($line in $lines) {
     Set-Item -Path Env:$key -Value $val
 }
 
-Write-Host "✅ .env carregado no ambiente do processo atual." -ForegroundColor Green
+Write-Host "[OK] .env carregado no ambiente do processo atual." -ForegroundColor Green
 
 if ($ArgsToRun -and $ArgsToRun.Count -gt 0) {
-    Write-Host "▶️ Executando comando: $($ArgsToRun -join ' ')"
-    & $ArgsToRun
+    Write-Host "[RUN] Executando comando: $($ArgsToRun -join ' ')"
+    $command = $ArgsToRun[0]
+    $remaining = @()
+    if ($ArgsToRun.Count -gt 1) {
+        $remaining = $ArgsToRun[1..($ArgsToRun.Count - 1)]
+    }
+    & $command @remaining
     exit $LASTEXITCODE
 } else {
-    Write-Host "ℹ️ Nenhum comando informado. Um shell interativo será aberto com .env carregado."
+    Write-Host "[INFO] Nenhum comando informado. Um shell interativo será aberto com .env carregado."
     if ($PSVersionTable.PSEdition -eq 'Core') {
         pwsh
     } else {
         powershell
     }
 }
-

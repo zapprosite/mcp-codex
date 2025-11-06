@@ -57,10 +57,9 @@ args = ["-y", "@itseasy21/mcp-knowledge-graph"]
 env.MEMORY_FILE_PATH = "memory.jsonl"
 
 [mcpServers.fetch]
-# Cross-platform fetch MCP (Node)
+# Cross-platform fetch MCP (Node) — usa distribuição empacotada com binário
 command = "npx"
-args = ["-y", "@mokei/mcp-fetch"]
-env.PYTHONIOENCODING = "utf-8"
+args = ["-y", "d33naz-mcp-fetch"]
 
 [mcpServers.Exa]
 command = "npx"
