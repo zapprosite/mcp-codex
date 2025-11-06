@@ -83,8 +83,8 @@ python scripts/test-mcps.py > docs/reports/SECURITY_FINDINGS.json
 3. **Em auditorias**: consulte `docs/SECURITY-AUDIT-2025-11.md` e regenere relatórios conforme necessário.
 
 ### Demonstração
-![Painel MCP Codex](docs/assets/mcp-dashboard.png)
-> Substitua por capturas reais do painel ou CLI ao estender o projeto.
+![Painel MCP Codex](docs/assets/mcp-dashboard.svg)
+> Visão geral de métricas e fluxos recomendados para o ambiente Codex.
 
 ## Isolamento Codex x Trae IDE
 - Instale MCPs do Trae com `scripts/trae-mcp-setup.ps1`, apontando para `C:\Users\<user>\.trae\mcp`.
@@ -106,7 +106,7 @@ python scripts/test-mcps.py > docs/reports/SECURITY_FINDINGS.json
 - Utilize labels `security`, `docs`, `mcp/<nome>` para facilitar triagem.
 
 ## Licença
-Distribuído sob a licença MIT. Consulte o arquivo `LICENSE` (em preparação) ou procure a equipe de governança para detalhes de uso corporativo.
+Distribuído sob a licença MIT. Consulte o arquivo [`LICENSE`](LICENSE) ou procure a equipe de governança para detalhes de uso corporativo.
 
 ## Contato
 - **Equipe técnica**: mcp-engineering@trae.app

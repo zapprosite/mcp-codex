@@ -1,0 +1,58 @@
+<svg width="960" height="540" viewBox="0 0 960 540" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+    <style>
+      .title { font: 700 32px 'Segoe UI', 'Inter', sans-serif; fill: #f8fafc; }
+      .subtitle { font: 600 18px 'Segoe UI', 'Inter', sans-serif; fill: #cbd5f5; }
+      .label { font: 600 16px 'Segoe UI', 'Inter', sans-serif; fill: #cbd5f5; text-transform: uppercase; letter-spacing: 2px; }
+      .metric { font: 700 28px 'Segoe UI', 'Inter', sans-serif; fill: #38bdf8; }
+      .card-title { font: 700 20px 'Segoe UI', 'Inter', sans-serif; fill: #f1f5f9; }
+      .card-body { font: 400 14px 'Segoe UI', 'Inter', sans-serif; fill: #e2e8f0; line-height: 1.6; }
+      .chip { font: 600 12px 'Segoe UI', 'Inter', sans-serif; fill: #0f172a; }
+    </style>
+  </defs>
+
+  <rect width="960" height="540" rx="24" fill="url(#bg)" />
+
+  <text x="60" y="90" class="title">MCP Codex Control Plane</text>
+  <text x="60" y="126" class="subtitle">Instant visibility sobre MCPs ativos do Codex CLI + Trae IDE</text>
+
+  <g transform="translate(60 160)">
+    <rect width="260" height="140" rx="16" fill="#1e293b" stroke="#38bdf8" stroke-width="2" />
+    <text x="24" y="42" class="label">mcp ativos</text>
+    <text x="24" y="88" class="metric">16</text>
+    <text x="24" y="118" class="subtitle">Brave · Exa · Git · Obsidian · Task Manager</text>
+  </g>
+
+  <g transform="translate(360 160)">
+    <rect width="260" height="140" rx="16" fill="#1e293b" stroke="#22d3ee" stroke-width="2" />
+    <text x="24" y="42" class="label">health checks</text>
+    <text x="24" y="88" class="metric">OK</text>
+    <text x="24" y="118" class="subtitle">scripts/test-mcps.py • codex mcp list</text>
+  </g>
+
+  <g transform="translate(660 160)">
+    <rect width="260" height="140" rx="16" fill="#1e293b" stroke="#f472b6" stroke-width="2" />
+    <text x="24" y="42" class="label">isolamento</text>
+    <text x="24" y="88" class="metric">WSL ↔︎ Windows</text>
+    <text x="24" y="118" class="subtitle">.mcp/ local · Trae .trae/mcp</text>
+  </g>
+
+  <g transform="translate(60 326)">
+    <rect width="400" height="170" rx="18" fill="#111827" stroke="#334155" stroke-width="1.5" />
+    <text x="24" y="56" class="card-title">Fluxo diário recomendado</text>
+    <text x="24" y="96" class="card-body">1. `python3 scripts/validate-env.py` — garante variáveis intactas.\n2. `bash scripts/install_mcps.sh` — sincroniza servidores MCP.\n3. `python3 scripts/test-mcps.py --check-cli` — valida handshakes Codex/Trae.\n4. `codex mcp list` — inspeção final antes das automações.</text>
+  </g>
+
+  <g transform="translate(500 326)">
+    <rect width="420" height="170" rx="18" fill="#111827" stroke="#334155" stroke-width="1.5" />
+    <text x="24" y="56" class="card-title">Stacks suportados</text>
+    <text x="24" y="94" class="chip">Codex CLI</text>
+    <text x="150" y="94" class="chip">Trae IDE</text>
+    <text x="276" y="94" class="chip">Playwright</text>
+    <text x="24" y="128" class="card-body">Integra com Brave Search, Exa, Context7, GitHub, SQLite, Obsidian, Task Manager e Shell. Papeladas e auditorias ficam visíveis em `docs/reports/`.</text>
+  </g>
+</svg>
