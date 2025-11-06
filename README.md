@@ -1,83 +1,106 @@
-# MCP Codex Setup — Novembro/2025
+# MCP Codex Playbook
 
-Estrutura completa para instalar e validar os MCPs mais usados com o Codex CLI dentro do WSL Ubuntu 24.04 (Trae IDE). Inclui prompt inicial, template `.env`, configuração TOML, scripts automatizados e guias de API.
+Blueprint to run Model Context Protocol (MCP) servers with the Codex CLI on WSL without colliding with Windows desktop IDE setups. Senior-friendly documentation, predictable scripts, and a vetted MCP catalogue keep automation reliable and compartmentalised.
 
-## Pré-requisitos
-- Node.js 18+ e npm no WSL.
-- Codex CLI instalado globalmente (`npm i -g @smithery-ai/codex-cli`).
-- Acesso às chaves das integrações: GitHub, Brave Search, Exa, Context7, Playwright (opcional), Obsidian (opcional).
-  Para o modelo, utilize login OAuth no Codex/Trae (sem `OPENAI_*`).
+## Vision
+- Provide a reproducible MCP environment for Codex CLI operators working inside WSL2 Ubuntu 24.04.
+- Avoid cross-contamination with Trae IDE or other desktop MCP clients by isolating binaries, configs, and credentials.
+- Offer clear operational guardrails so teams can onboard quickly, audit confidently, and extend MCP coverage safely.
 
-## Passos rápidos
-1. Leia o `docs/PROMPT.md` e execute o prompt principal se quiser gerar a estrutura via Codex CLI.
-2. Copie o template: `cp .env.example .env` ou rode `python scripts/setup-apis.py` para preencher interativamente.
-3. Instale tudo com `bash scripts/install_mcps.sh`.
-4. Valide a configuração via `python3 scripts/test-mcps.py`.
-5. Consulte `docs/API-SETUP-GUIDE.md` para detalhes das credenciais e `docs/MCP-USAGE-GUIDE.md` para exemplos de uso.
+## Repository at a Glance
+- `codex-config.toml` – canonical list of MCP servers + environment placeholders.
+- `scripts/` – setup, validation, and dual-run orchestration helpers.
+- `docs/` – setup guides, audit logs, usage recipes, and the prompting catalogue.
+- `data/` – local working data (`.gitkeep` only; real vaults/databases stay untracked).
+- `docs/reports/` – consolidated audit outputs (security findings, schema stubs, metrics).
 
-## Conteúdo
-- `codex-config.toml`: lista dos 16 MCPs (10 principais + 6 adicionais) já parametrizados.
-- `scripts/install_mcps.sh`: instala MCPs via npm (prefix `.mcp/`), copia config e checa o Codex CLI.
-- `scripts/setup-apis.py`: wizard para preencher `.env`, com validação leve das chaves.
-- `scripts/test-mcps.py`: roda `codex mcp list/info` e sinaliza MCPs com issues.
-- `docs/API-SETUP-GUIDE.md`: links oficiais para gerar cada chave/token.
-- `docs/MCP-USAGE-GUIDE.md`: comandos recomendados para debug e uso cotidiano.
+## Why a Dedicated Codex Repository?
+1. **Process isolation** – Codex CLI loads MCPs from `.mcp/` and `.env` scoped to WSL; Trae IDE stays on its own Windows path (`%USERPROFILE%\.trae\mcp`).
+2. **Deterministic ops** – All installation and validation steps live in versioned scripts, eliminating “works on my machine” drift.
+3. **Auditable baseline** – Security audits, dependency reports, and backup snapshots remain in `docs/reports/`, enabling repeatable compliance checks.
+4. **Safer experimentation** – New MCPs or config tweaks can be trialled here without risking production IDE workflows.
 
-## MCPs incluídos
-- `sequential-thinking` — `@modelcontextprotocol/server-sequential-thinking`
-- `shell` — `@mkusaka/mcp-shell-server`
-- `github` — `@modelcontextprotocol/server-github`
-- `brave-search` — `@brave/brave-search-mcp-server`
-- `web-research` — `@mzxrai/mcp-webresearch`
-- `task-manager` — `@kazuph/mcp-taskmanager`
-- `sqlite` — `mcp-server-sqlite-npx`
-- `fetch` — `@mokei/mcp-fetch`
-- `memory` — `@iachilles/memento`
-- `playwright` — `@executeautomation/playwright-mcp-server`
-- `filesystem` — `@modelcontextprotocol/server-filesystem`
-- `desktop-commander` — `@wonderwhy-er/desktop-commander`
-- `exa-search` — `exa-mcp`
-- `obsidian` — `mcp-obsidian`
-- `context7` — `@upstash/context7-mcp`
-- `git` — `@cyanheads/git-mcp-server`
+## Quick Start Checklist
+1. Clone the repository inside WSL2 (`/mnt/d/projetos/mcp-codex`).
+2. Review the orchestrator prompt in `docs/PROMPT.md` if you need to bootstrap via Codex CLI.
+3. Copy secrets template: `cp .env.example .env`.
+4. Populate the `.env` using the guided wizard: `python scripts/setup-apis.py`.
+5. Install MCP dependencies: `bash scripts/install_mcps.sh`.
+6. Validate the configuration end-to-end: `python3 scripts/test-mcps.py`.
 
-> Observações: `@modelcontextprotocol/server-github` é marcado como deprecated no npm, mas continua funcional (última verificação 03/11/2025). O servidor `fetch` oficial é distribuído via Python (`mcp-server-fetch`), portanto usamos o pacote `@mokei/mcp-fetch` para manter o fluxo baseado em npm.
+## Environment & Tooling
+- **Prerequisites**: Node.js LTS 20.x, npm, Python 3.12 (WSL image default), and `codex` CLI (`npm i -g @smithery-ai/codex-cli`).
+- **Key variables**: `GITHUB_TOKEN`, `BRAVE_API_KEY`, `EXA_API_KEY`, `CONTEXT7_API_KEY`, `PLAYWRIGHT_WS_ENDPOINT`, `OBSIDIAN_VAULT_PATH`, `SQLITE_DB_PATH`, `MEMORY_DB_PATH`, `TASK_MANAGER_FILE_PATH` (see `.env.example`).
+- **Scripts**:
+  - `scripts/setup-apis.py` – interactive `.env` builder with format validation.
+  - `scripts/install_mcps.sh` – installs all MCP servers into `.mcp/` and refreshes config overlays.
+  - `scripts/test-mcps.py` – inspects `codex-config.toml`, confirms binaries exist, optionally cross-checks the live CLI state.
+  - `scripts/start-dual-mcp-daemon.sh` – optional background orchestrator for dual Codex + Trae workflows.
 
-## Próximos passos sugeridos
-- Versionar o projeto após preencher `.env` (garanta que `.env` está no `.gitignore`).
-- Agendar revisão periódica das chaves (rotacionar tokens sensíveis).
-- Ajustar `codex-config.toml` caso precise habilitar/desabilitar MCPs específicos (ex.: `iterm-mcp` no macOS).
+## MCP Catalogue
+| MCP | Package | Role in the stack | Why it ships here |
+| --- | --- | --- | --- |
+| `sequential_thinking` | `@modelcontextprotocol/server-sequential-thinking` | Structured reasoning agent | Baseline planning agent for Codex CLI automations. |
+| `shell` | `@mkusaka/mcp-shell-server` | Sandboxed shell execution | Enables command execution with explicit audit trail. |
+| `github` | `@modelcontextprotocol/server-github` | GitHub API bridge | Pulls issues/PRs without custom scripting; battle-tested despite deprecation notice. |
+| `brave_search` | `@brave/brave-search-mcp-server` | Web search | Fast SERP access for research flows tied to Brave API keys. |
+| `web_research` | `@mzxrai/mcp-webresearch` | Aggregated research agent | Combines Brave + Exa intelligence for richer summarisation. |
+| `task_manager` | `@kazuph/mcp-taskmanager` | Task tracking | Persists multi-step workflows across sessions. |
+| `sqlite` | `mcp-server-sqlite-npx` | Lightweight datastore | Gives Codex an embedded SQL surface pointing to `data/sqlite/mcp.sqlite`. |
+| `fetch` | `d33naz-mcp-fetch` | HTTP client | Secure HTTP probing without leaking secrets, complementing CLI curl. |
+| `memory` | `@iachilles/memento` | Long-term memory | Stores semantic notes in `data/memory-store/memento.db`. |
+| `playwright` | `@executeautomation/playwright-mcp-server` | Browser automation | Bridges Codex with remote browsers via `PLAYWRIGHT_WS_ENDPOINT`. |
+| `filesystem` | `@modelcontextprotocol/server-filesystem` | File access | Exposes project tree with respect to `FILESYSTEM_BASE_PATH`. |
+| `desktop_commander` | `@wonderwhy-er/desktop-commander` | Desktop orchestration | Manages processes/files outside WSL when permitted. |
+| `exa_search` | `exa-mcp` | Semantic web search | Taps Exa API for code-aware search tasks. |
+| `obsidian` | `mcp-obsidian` | Knowledge vault connector | Syncs notes with `OBSIDIAN_VAULT_PATH`; ideal for Trae knowledge bases. |
+| `context7` | `@upstash/context7-mcp` | Context7 document retrieval | Fetches embeddings/documents via Context7 API. |
+| `git` | `@cyanheads/git-mcp-server` | Git operations | Adds read/write Git controls with token-based auth. |
 
-## Isolamento Trae IDE vs Codex CLI
+## Validation Workflow
+```bash
+# Ensure environment keys and paths are correct
+python3 scripts/validate-env.py
 
-- Objetivo: evitar conflitos entre MCPs e variáveis quando usar Trae IDE e Codex CLI no mesmo PC.
-- Como manter isolado:
-  - Codex CLI
-    - Usa `~/.codex/config.toml` e os pacotes instalados no prefixo local `.mcp/` do projeto.
-    - Carregue o `.env` apenas no processo do Codex com `scripts/codex-env.ps1`:
-      - `./scripts/codex-env.ps1 codex mcp list`
-      - `./scripts/codex-env.ps1 python scripts/test-mcps.py`
-    - Recomenda-se Node LTS 20 no WSL (conforme pré-requisitos).
-  - Trae IDE
-    - Configure cada MCP diretamente no Trae, com pacote instalado em um diretório separado (ex.: `C:\Users\<user>\.trae\mcp`).
-    - Prefira executar via `node.exe` (caminho absoluto do Node 20) apontando para o `dist/index.js` do MCP, em vez de `npx`.
-    - Defina variáveis de ambiente por MCP dentro do Trae, sem depender do `.env` do projeto.
-- Benefícios:
-  - Sem compartilhamento de caches `npx` e dependências entre Trae e Codex.
-  - Tokens e chaves ficam separados; o `.env` só afeta o processo do Codex.
-  - Reduz erros como `ERR_MODULE_NOT_FOUND` em caches do `npx` e conflitos de versão do Node.
+# Confirm MCP binaries/configuration and compare with codex CLI (optional)
+python3 scripts/test-mcps.py --check-cli
 
-## Política de Auditoria e Segurança (Nov/2025)
+# Quick CLI sanity check
+codex mcp list
+```
 
-- Snapshot pré-auditoria disponível no branch `backup-pre-auditoria` acompanhado do arquivo `backup-pre-auditoria.tar.gz` (inclui itens ignorados).
-- Relatórios e artefatos de auditoria centralizados em `docs/reports/`.
-- `.gitignore` fortalecido para bloquear ambientes (`.env*`), dependências (`node_modules/`, `.venv/`), elementos de sistema e artefatos temporários.
-- Histórico limpo para excluir diretórios sensíveis (`.codex/`, `.vscode/`, `artifacts/`) utilizando `git filter-repo`.
-- Branch principal passa a ser `master`; sincronize forks locais com `git fetch --all` e `git branch -m main master` quando necessário.
-- Antes de cada release, execute a verificação mínima:
+## Trae IDE Isolation Checklist
+- Install Trae-specific MCP packages via `scripts/trae-mcp-setup.ps1` into `C:\Users\<user>\.trae\mcp`.
+- Configure each Trae MCP with `node.exe` path + `dist/index.js` entrypoint (avoid `npx`).
+- Set environment variables per MCP inside Trae (do **not** reuse the WSL `.env`).
+- Use `FILESYSTEM_BASE_PATH` to restrict Codex filesystem reach and prevent cross-platform path leaks.
+- When toggling between Codex CLI and Trae IDE, restart the Trae MCP panel after any `.env` or config change to keep transports in sync.
+
+## Security & Audit Posture
+- Pre-audit snapshot lives in branch `backup-pre-auditoria` plus `backup-pre-auditoria.tar.gz`.
+- Hardened `.gitignore` keeps secrets, dependencies, caches, and binary artefacts out of version control.
+- Historical cleanup executed with `git filter-repo` removed `.codex/`, `.vscode/`, and `artifacts/` from history; refer to `docs/SECURITY-AUDIT-2025-11.md` for exact commands.
+- Audit evidence and metrics stored under `docs/reports/` for compliance reviews (`SECURITY_FINDINGS.json`, `CODE_METRICS.json`, `SCHEMA_BACKUP.sql`).
+- Recommended pre-release check:
   ```bash
   git ls-files
   python3 scripts/validate-env.py
   python3 scripts/test-mcps.py
   ```
-- Em caso de necessidade de nova faxina, siga `docs/SECURITY-AUDIT-2025-11.md`.
+
+## Documentation Map
+- `docs/PROMPT.md` – starter prompt for Codex CLI scaffolding.
+- `docs/API-SETUP-GUIDE.md` – step-by-step credential acquisition for every MCP.
+- `docs/MCP-USAGE-GUIDE.md` – command cheatsheet and troubleshooting flows.
+- `docs/TRAe-MCP-SETUP.md` – deep dive on isolating Trae IDE MCPs.
+- `docs/SECURITY-AUDIT-2025-11.md` – full audit narrative and remediation history.
+- `docs/reports/` – machine-generated outputs from audits and diagnostics.
+
+## Contributing & Support
+- Follow the security-first workflow described in `CONTRIBUTING.md` (branch strategy, secret hygiene, testing expectations).
+- Open issues describing new MCP requests or improvements to validation scripts.
+- For incident response or secret rotation, start from `docs/reports/AUDIT_REPORT.md` and coordinate via the team’s secure channel.
+
+---
+
+Maintained by the MCP Codex engineering team. Feedback and PRs welcome.
