@@ -21,7 +21,7 @@ Status: Completed – Aggressive scan across config, security, and tooling.
 3) Dependency vulnerabilities (from `.mcp/package.json` → `npm audit`)
    - Total: 5 (High: 2, Moderate: 3, Critical: 0)
    - Notable: `playwright` (GHSA-7mvr-c777-76hp) – update to `>= 1.55.1`.
-   - See `SECURITY_FINDINGS.json` for summary.
+   - See [`SECURITY_FINDINGS.json`](./SECURITY_FINDINGS.json) for summary.
 
 4) Portability risk
    - `mcpServers.fetch` uses a Windows-specific uvx path; prefer a cross-platform executable or env-driven path.
@@ -31,15 +31,15 @@ Status: Completed – Aggressive scan across config, security, and tooling.
    - Database: No SQLite DB/migrations present; generated stub `SCHEMA_BACKUP.sql`.
 
 ## Code/Repo Metrics
-- See `CODE_METRICS.json`.
+- See [`CODE_METRICS.json`](./CODE_METRICS.json).
 - Scope excludes `.git` and `.mcp` vendor content.
 
 ## Produced Artifacts
 - `AUDIT_REPORT.md` (this file)
-- `SECURITY_FINDINGS.json` (sanitization + npm audit summary)
+- [`SECURITY_FINDINGS.json`](./SECURITY_FINDINGS.json) (sanitization + npm audit summary)
 - `TEST_RESULTS.log` (E2E/DB/Stripe status)
-- `CODE_METRICS.json` (structure overview)
-- `SCHEMA_BACKUP.sql` (stub – no schema found)
+- [`CODE_METRICS.json`](./CODE_METRICS.json) (structure overview)
+- [`SCHEMA_BACKUP.sql`](./SCHEMA_BACKUP.sql) (stub – no schema found)
 
 ## Recommendations
 - Rotate all tokens found in `codex-config.toml` and `.env`.

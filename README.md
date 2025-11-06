@@ -9,7 +9,7 @@ Estrutura completa para instalar e validar os MCPs mais usados com o Codex CLI d
   Para o modelo, utilize login OAuth no Codex/Trae (sem `OPENAI_*`).
 
 ## Passos rápidos
-1. Leia o `PROMPT.md` e execute o prompt principal se quiser gerar a estrutura via Codex CLI.
+1. Leia o `docs/PROMPT.md` e execute o prompt principal se quiser gerar a estrutura via Codex CLI.
 2. Copie o template: `cp .env.example .env` ou rode `python scripts/setup-apis.py` para preencher interativamente.
 3. Instale tudo com `bash scripts/install_mcps.sh`.
 4. Valide a configuração via `python3 scripts/test-mcps.py`.
@@ -70,6 +70,7 @@ Estrutura completa para instalar e validar os MCPs mais usados com o Codex CLI d
 ## Política de Auditoria e Segurança (Nov/2025)
 
 - Snapshot pré-auditoria disponível no branch `backup-pre-auditoria` acompanhado do arquivo `backup-pre-auditoria.tar.gz` (inclui itens ignorados).
+- Relatórios e artefatos de auditoria centralizados em `docs/reports/`.
 - `.gitignore` fortalecido para bloquear ambientes (`.env*`), dependências (`node_modules/`, `.venv/`), elementos de sistema e artefatos temporários.
 - Histórico limpo para excluir diretórios sensíveis (`.codex/`, `.vscode/`, `artifacts/`) utilizando `git filter-repo`.
 - Branch principal passa a ser `master`; sincronize forks locais com `git fetch --all` e `git branch -m main master` quando necessário.

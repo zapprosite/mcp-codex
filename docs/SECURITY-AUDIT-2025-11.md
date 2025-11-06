@@ -18,6 +18,7 @@ Esta auditoria visa garantir que o repositório MCP Codex esteja alinhado às me
    - README atualizado com diretrizes de segurança.
    - `CONTRIBUTING.md` criado com política de commits e verificação de segredos.
    - Alerta para notificar colaboradores sobre a troca do branch principal.
+   - Artefatos de auditoria consolidados em `docs/reports/` para facilitar consultas futuras.
 
 ## Recomendações contínuas
 - Repetir `python3 scripts/validate-env.py` e `python3 scripts/test-mcps.py` após alterações em variáveis ou pacotes MCP.
