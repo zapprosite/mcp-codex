@@ -66,3 +66,17 @@ Estrutura completa para instalar e validar os MCPs mais usados com o Codex CLI d
   - Sem compartilhamento de caches `npx` e dependências entre Trae e Codex.
   - Tokens e chaves ficam separados; o `.env` só afeta o processo do Codex.
   - Reduz erros como `ERR_MODULE_NOT_FOUND` em caches do `npx` e conflitos de versão do Node.
+
+## Política de Auditoria e Segurança (Nov/2025)
+
+- Snapshot pré-auditoria disponível no branch `backup-pre-auditoria` acompanhado do arquivo `backup-pre-auditoria.tar.gz` (inclui itens ignorados).
+- `.gitignore` fortalecido para bloquear ambientes (`.env*`), dependências (`node_modules/`, `.venv/`), elementos de sistema e artefatos temporários.
+- Histórico limpo para excluir diretórios sensíveis (`.codex/`, `.vscode/`, `artifacts/`) utilizando `git filter-repo`.
+- Branch principal passa a ser `master`; sincronize forks locais com `git fetch --all` e `git branch -m main master` quando necessário.
+- Antes de cada release, execute a verificação mínima:
+  ```bash
+  git ls-files
+  python3 scripts/validate-env.py
+  python3 scripts/test-mcps.py
+  ```
+- Em caso de necessidade de nova faxina, siga `docs/SECURITY-AUDIT-2025-11.md`.
