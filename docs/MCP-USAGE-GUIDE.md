@@ -33,10 +33,6 @@ Sugestões de comandos para explorar os 16 MCPs instalados no baseline (via Code
   `codex mcp exec brave-search "últimas novidades TypeScript 5.6"`  
   Usa a API Brave para buscas web com ranking confidencial.
 
-- **web-research**  
-  `codex mcp exec web-research "Resuma artigos sobre MCPs"`  
-  Combina Brave + Exa para pesquisa enriquecida com crawling.
-
 - **task-manager**  
   `codex mcp exec task-manager add "Implementar integração Stripe"`  
   Gera e organiza to-dos persistentes no Codex CLI.
@@ -44,10 +40,6 @@ Sugestões de comandos para explorar os 16 MCPs instalados no baseline (via Code
 - **sqlite**  
   `codex mcp exec sqlite "SELECT name FROM sqlite_master WHERE type='table';"`  
   Opera no banco configurado em `SQLITE_DB_PATH`.
-
-- **fetch**  
-  `codex mcp exec fetch GET https://httpbin.org/json`  
-  Requisições HTTP rápidas sem sair do CLI (`@mokei/mcp-fetch`).
 
 - **memory**  
   `codex mcp exec memory remember "Projeto X usa Node 20"`  
@@ -71,11 +63,7 @@ Sugestões de comandos para explorar os 16 MCPs instalados no baseline (via Code
   `codex mcp exec exa-search "papers sobre MCP 2025"`  
   Busca semântica avançada com resultados enriquecidos.
 
-- **obsidian**  
-  `codex mcp exec obsidian list`  
-  Lista notas/tags da vault informada em `OBSIDIAN_VAULT_PATH`.
-
-- **context7**  
+- **context7**
   `codex mcp exec context7 summarize ./src/api`  
   Gera documentação atualizada a partir do repositório local.
 

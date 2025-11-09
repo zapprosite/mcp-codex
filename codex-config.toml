@@ -19,10 +19,6 @@ command = "npx"
 args = ["-y", "@modelcontextprotocol/server-brave-search"]
 env.BRAVE_API_KEY = "${BRAVE_API_KEY}"
 
-[mcpServers.webresearch]
-command = "npx"
-args = ["-y", "@mzxrai/mcp-webresearch@latest"]
-
 [mcpServers.Playwright]
 command = "npx"
 args = ["-y", "@executeautomation/playwright-mcp-server"]
@@ -55,11 +51,6 @@ env.MEMORY_FILE_PATH = "memory.json"
 command = "npx"
 args = ["-y", "@itseasy21/mcp-knowledge-graph"]
 env.MEMORY_FILE_PATH = "memory.jsonl"
-
-[mcpServers.fetch]
-# Cross-platform fetch MCP (Node) — usa distribuição empacotada com binário
-command = "npx"
-args = ["-y", "d33naz-mcp-fetch"]
 
 [mcpServers.Exa]
 command = "npx"

@@ -27,7 +27,7 @@ Use este passo a passo para gerar ou recuperar cada credencial antes de executar
 - **Variável**: `EXA_API_KEY`
 - **Onde gerar**: https://exa.ai/exa-api
 - **Passos**: após login, gere uma chave em **Dashboard → API Keys**.  
-  Permite buscas semânticas complementares ao MCP `web-research`.
+  Permite buscas semânticas via o MCP `exa-search`.
 
 ## Context7 (Upstash)
 - **Variável**: `CONTEXT7_API_KEY`
@@ -38,11 +38,6 @@ Use este passo a passo para gerar ou recuperar cada credencial antes de executar
 - **Variável**: `PLAYWRIGHT_WS_ENDPOINT`
 - **Quando usar**: apenas se você expõe um navegador remoto/Cloud.  
 - **Valor**: URL `ws://` ou `wss://` do grid Playwright. Se deixar vazio, o MCP tenta abrir um browser local.
-
-## Obsidian
-- **Variável**: `OBSIDIAN_VAULT_PATH`
-- **Valor**: caminho absoluto da sua vault (ex.: `/mnt/d/notas/MinhaVault`).  
-- **Observação**: garanta permissões de leitura/escrita para o usuário do WSL.
 
 ## SQLite MCP
 - **Variável**: `SQLITE_DB_PATH`
