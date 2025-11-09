@@ -1,44 +1,106 @@
-# Contexto do Setup (08/11/2025)
+# AGENTS.md — Contrato de Execução e Orquestração Codex CLI (Data 08/11/2025)
 
-## Ambiente
-- SO: Windows 11 Pro (C: SSD SATA 110GB + D: NVME Gen3)
-- WSL: Ubuntu 24.04, /mnt/d/projetos
-- IDE: Trae (fork VS Code)
-- Node: v22.21.0
-- Codex CLI: v0.56.0
+## 1. Propósito
+Definir normas para que o Codex CLI opere sob disciplina controlada, sem improvisação,
+garantindo que todos os agentes (MCPs e Daemon) executem tarefas de forma previsível,
+determinística e auditável.
 
-## Configuração MCP
-- Manifesto: /mnt/d/projetos/mcp-codex/.mcp/servers.json
-- Include: ~/.codex/config.toml aponta para servers.json
-- 16 MCPs configurados (13 ativos):
-  - Ativos: brave_search, context7, desktop_commander, exa_search, filesystem, git, github, memory, playwright, sequential_thinking, shell, sqlite, task_manager
-  - Desativados temporariamente: fetch, obsidian, web_research (handshake failures)
-- Env: carregado via scripts/codex-env.sh (mantém .env sem expor secrets)
-- Allowlist: /mnt/d/projetos, /home/zappro (filesystem + desktop_commander)
-- Timeouts: 45-90s por MCP
+---
 
-## Status
-- wsl.conf: metadata,umask=22,fmask=11 ✅
-- Permissões node_modules/.bin: +x aplicado ✅
-- .vscode/settings.json: otimizado para drvfs (watcherExclude, polling=false) ✅
+## 2. Regras de Conduta
+- O Codex **não deve gerar ou alterar lógica por conta própria**.  
+  Toda modificação deve seguir os prompts e arquivos oficiais (.env, scripts/).
+- **É proibido improvisar** variáveis ou chaves fora de `.env` ou `.env.example`.
+- O daemon e os MCPs devem ser inicializados **sempre via wrapper automático**.
+- Cada execução deve ser registrada em `~/.codex/auto-run.log`.
 
-## Próximos Passos
-1. Reativar fetch: testar @mokei/mcp-fetch vs d33naz-mcp-fetch
-2. Obsidian: validar OBSIDIAN_VAULT_PATH existe e tem allow
-3. Web_research: confirmar BRAVE_API_KEY e EXA_API_KEY válidos
-4. Aplicar settings.json em outros repos (zappro-mvp, ollama/projeto-sollama, Land-Refrimix)
+---
 
-## Comandos Úteis
-Recarregar env e listar MCPs
-cd /mnt/d/projetos/mcp-codex && source scripts/codex-env.sh && codex mcp list
+## 3. Estrutura de Controle
+- **Wrapper oficial:** `~/.npm-global/bin/codex`
+  - Renomeia o binário real → `codex-real`
+  - Injeta e garante `MCP_PROMPT_SEED=dual-mcp-orchestrator`
+  - Carrega `.env` e `.env.example`
+  - Inicia o daemon com retry (3 tentativas)
+  - Cacheia MCPs em `~/.codex/mcp-health.json`
+  - Corrige TTY no WSL usando `script`
 
-Teste funcional
-codex "Liste os arquivos em /mnt/d/projetos/mcp-codex"
-codex "Liste 3 PRs abertas em openai/openai-python"
+---
 
-Reativar MCP (exemplo: fetch)
-cd /mnt/d/projetos/mcp-codex/.mcp
-npx -y d33naz-mcp-fetch --help # se OK:
-jq '.servers += {"fetch":{"command":"npx","args":["-y","d33naz-mcp-fetch"],"startup_timeout_sec":90}}' servers.json > servers.json.tmp && mv servers.json.tmp servers.json
+## 4. Contratos Técnicos
 
-text
+### Variáveis críticas
+| Variável | Obrigatória | Função |
+|-----------|--------------|--------|
+| MCP_PROMPT_SEED | ✅ | Ativa orquestrador dual-MCP |
+| GITHUB_TOKEN | ✅ | Autenticação GitHub MCP |
+| BRAVE_API_KEY | ✅ | Busca externa |
+| EXA_API_KEY | ✅ | Busca alternativa |
+| CONTEXT7_API_KEY | ✅ | Enriquecimento semântico |
+
+### Logs
+- `~/.codex/auto-run.log` → auditoria de execuções
+- `~/.codex/daemon.log` → inicialização do daemon
+- `~/.codex/mcp-health.json` → cache do inventário MCP
+
+---
+
+## 5. Contratos de Execução
+
+### Regras de inicialização
+1. Se `.env` e `.env.example` não existirem → gerar modelos mínimos.
+2. Sempre garantir `MCP_PROMPT_SEED` antes de executar.
+3. Iniciar daemon via:
+   ```bash
+   codex daemon:start --profile=dual-mcp-orchestrator
+Caso o daemon falhe → tentar novamente 3 vezes com sleep 1s.
+
+Nunca rodar daemon:status (não existe oficialmente).
+
+6. Testes Smoke obrigatórios
+Executar automaticamente após instalação:
+
+bash
+Copiar código
+# 1. Confirma seed
+codex env:seed | grep dual-mcp-orchestrator
+
+# 2. Checa daemon
+pgrep -af 'codex .*daemon' || codex daemon:start --profile=dual-mcp-orchestrator >/dev/null 2>&1
+
+# 3. Garante cache
+test -s ~/.codex/mcp-health.json && wc -c ~/.codex/mcp-health.json
+
+# 4. Valida logs
+tail -n 10 ~/.codex/auto-run.log
+
+# 5. Inspeção .env
+grep MCP_PROMPT_SEED .env
+7. Política de Fallback
+Caso algum MCP falhe, o daemon deve seguir a cadeia:
+
+Recarregar cache.
+
+Registrar erro no log.
+
+Continuar execução com MCPs restantes.
+
+8. Política de Atualização
+Alterações no wrapper devem manter compatibilidade.
+
+Nenhum script pode sobrescrever segredos existentes.
+
+Antes de qualquer upgrade, rodar novamente os testes Smoke.
+
+9. Auditoria e Controle
+Todos os logs devem conter timestamps UTC (ISO 8601).
+
+Erros de inicialização devem ser marcados com [WARN] ou [ERR].
+
+O wrapper é soberano: qualquer chamada direta ao codex-real
+fora do wrapper é considerada fora de compliance.
+
+10. Conclusão
+Com este contrato, o Codex CLI atua sob orquestração completa,
+mantendo a integridade do ambiente MCP, estabilidade no daemon
+e reprodutibilidade das execuções.
