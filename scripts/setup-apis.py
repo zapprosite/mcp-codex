@@ -24,7 +24,6 @@ ENV_ORDER = [
     "EXA_API_KEY",
     "CONTEXT7_API_KEY",
     "PLAYWRIGHT_WS_ENDPOINT",
-    "OBSIDIAN_VAULT_PATH",
     "SQLITE_DB_PATH",
     "FILESYSTEM_BASE_PATH",
     "MEMORY_DB_PATH",
@@ -114,12 +113,6 @@ def prompt_env() -> Dict[str, str]:
     if playwright_ws:
         env["PLAYWRIGHT_WS_ENDPOINT"] = playwright_ws
 
-    # Obsidian
-    print("\n🗂  Obsidian MCP exige o caminho da vault.")
-    obsidian_path = input("OBSIDIAN_VAULT_PATH (ex.: /mnt/d/notas/MinhaVault): ").strip()
-    if obsidian_path:
-        env["OBSIDIAN_VAULT_PATH"] = obsidian_path
-
     # Defaults locais
     # Sem variáveis OPENAI_* — uso por OAuth no Codex/Trae.
     env.setdefault("GITHUB_TOKEN", "")
@@ -127,7 +120,6 @@ def prompt_env() -> Dict[str, str]:
     env.setdefault("EXA_API_KEY", "")
     env.setdefault("CONTEXT7_API_KEY", "")
     env.setdefault("PLAYWRIGHT_WS_ENDPOINT", "")
-    env.setdefault("OBSIDIAN_VAULT_PATH", "")
     env.setdefault("SQLITE_DB_PATH", "./data/mcp_database.db")
     env.setdefault("FILESYSTEM_BASE_PATH", "./")
     env.setdefault("MEMORY_DB_PATH", "./data/memory-store/memento.db")

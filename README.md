@@ -57,7 +57,7 @@ python3 scripts/test-mcps.py --check-cli
 
 ### Variáveis importantes
 - `FILESYSTEM_BASE_PATH`: restringe o alcance do MCP filesystem.
-- `OBSIDIAN_VAULT_PATH`, `MEMORY_DB_PATH`, `SQLITE_DB_PATH`: apontam para dados persistidos em `data/`.
+- `MEMORY_DB_PATH`, `SQLITE_DB_PATH`: apontam para dados persistidos em `data/`.
 - `PLAYWRIGHT_WS_ENDPOINT`: conecta com instâncias remotas do Playwright.
 
 ## Guia de Uso
@@ -66,12 +66,6 @@ python3 scripts/test-mcps.py --check-cli
 ```bash
 # Listar MCPs configurados no Codex CLI
 codex mcp list
-
-# Inspecionar um servidor específico
-codex mcp get fetch
-
-# Executar um MCP manualmente (exemplo: obsidian)
-npx -y mcp-obsidian $OBSIDIAN_VAULT_PATH
 
 # Atualizar snapshot de auditoria
 python scripts/test-mcps.py > docs/reports/SECURITY_FINDINGS.json
