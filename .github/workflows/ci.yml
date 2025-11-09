@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+jobs:
+  lint-and-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Shell lint (scripts)
+        run: |
+          set -Eeuo pipefail
+          if ls scripts/*.sh >/dev/null 2>&1; then
+            for f in scripts/*.sh; do
+              echo "[lint] $f"
+              bash -n "$f"
+            done
+          else
+            echo "no scripts to lint"
+          fi
+
+      - name: Static checks (markdown existence)
+        run: |
+          set -Eeuo pipefail
+          test -f README.md
+          test -f AGENTS.md || echo "AGENTS.md not present (ok if pending)"
+          test -f CONTRIBUTING.md || echo "CONTRIBUTING.md not present (ok if pending)"
+
+      - name: Smoke placeholder (no systemd in CI)
+        run: |
+          echo "CI environment: skipping systemd-dependent checks"
+          echo "OK"

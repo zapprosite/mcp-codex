@@ -1,76 +1,10 @@
-# Environment files
-.env
-.env.*
-!.env.example
-
-# Dependency directories
 node_modules/
-.mcp/
-.venv/
-venv/
-pip-wheel-metadata/
-**/__pycache__/
-*.egg-info/
-.Python
-
-# Build and cache artifacts
 dist/
-build/
-out/
-tmp/
-temp/
-artifacts/
-deploy/
-coverage/
-coverage.xml
-.nyc_output/
-.pytest_cache/
-.mypy_cache/
-.cache/
-*.py[cod]
-*.pyd
-*.so
-*.dylib
-*.dll
-*.o
-*.obj
-
-# Logs and reports
+.env
 *.log
-logs/
-TEST_RESULTS.log
-npm-debug.log*
-yarn-debug.log*
-pnpm-debug.log*
-lerna-debug.log*
-
-# IDE and editor configuration
-.vscode/
-.idea/
-.vs/
-*.code-workspace
-*.iml
-
-# System files
-.DS_Store
-Thumbs.db
-desktop.ini
-
-# Temporary files
-*.tmp
+.codex/*
+!.codex/prompts/
+!.codex/reports/
 *.swp
-*.swo
-
-# Local data stores
-data/**/*.db
-data/**/*.sqlite
-data/memory-store/
-data/obsidian-vault/
-!data/.gitkeep
-!data/**/.gitkeep
-
-# Miscellaneous runtime output
-.codex/
-backup-pre-auditoria.tar.gz
-install.log
-mcp-shell.log
+*.tmp
+.DS_Store
